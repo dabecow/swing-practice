@@ -4,15 +4,22 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 
-public class TableWindow extends JFrame implements Runnable {
+public class DialogWindow extends JFrame implements Runnable {
 
-  public TableWindow(){
+  MainWindow mainWindow;
+
+  public void setMainWindow(MainWindow mainWindow) {
+    this.mainWindow = mainWindow;
+  }
+
+  public DialogWindow(){
     Toolkit kit = Toolkit.getDefaultToolkit();
     Dimension screen = kit.getScreenSize();
     int w,h;
     w = screen.width;
     h = screen.height;
-    setSize(w/2,h/2);
+//    setMinimumSize(new Dimension(100, 100));
+    setSize(100,100);
     setLocation(w/4, h/4);
     setTitle("My Frame");
     Image img = kit.getImage("Icon.gif");
@@ -39,9 +46,9 @@ public class TableWindow extends JFrame implements Runnable {
       @Override
       public void actionPerformed(ActionEvent e) {
         if (sumRButton.isSelected()){
-//          stuff;
-        } else {
-//          another stuff;
+          mainWindow.showSumTable();
+        } else if (multiplyRButton.isSelected()){
+          mainWindow.showMultiplyingTable();
         }
       }
     });

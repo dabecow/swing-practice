@@ -6,7 +6,12 @@ import javax.swing.*;
 
 public class MainWindow extends JFrame implements Runnable {
 
-  TableWindow tableWindow;
+  DialogWindow dialogWindow;
+  MainWindow mainInstance;
+
+  public MainWindow getMainInstance() {
+    return mainInstance;
+  }
 
   public MainWindow(){
     Toolkit kit = Toolkit.getDefaultToolkit();
@@ -23,6 +28,7 @@ public class MainWindow extends JFrame implements Runnable {
     setIconImage(img);
     setJMenuBar(createMenuBar());
 
+    mainInstance = this;
   }
 
   private JMenuBar createMenuBar(){
@@ -31,8 +37,10 @@ public class MainWindow extends JFrame implements Runnable {
     JMenuItem createItem = new JMenuItem(new AbstractAction("Create") {
       @Override
       public void actionPerformed(ActionEvent e) {
-        tableWindow = new TableWindow();
-        tableWindow.setVisible(true);
+
+        dialogWindow = new DialogWindow();
+        dialogWindow.setMainWindow(getMainInstance());
+        dialogWindow.setVisible(true);
       }
     });
 
@@ -40,6 +48,15 @@ public class MainWindow extends JFrame implements Runnable {
     menuBar.add(fileMenu);
 
     return menuBar;
+  }
+
+  public void showSumTable(){
+    System.out.println("it has to be a sum table");
+  }
+
+  public void showMultiplyingTable(){
+    System.out.println("it has to be a multiplying table");
+
   }
 
   @Override
