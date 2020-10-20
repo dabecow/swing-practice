@@ -1,9 +1,12 @@
 package edu.oreluniver.lab6;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import javax.swing.*;
 
 public class MainWindow extends JFrame implements Runnable {
+
+  TableWindow tableWindow;
 
   public MainWindow(){
     Toolkit kit = Toolkit.getDefaultToolkit();
@@ -25,7 +28,14 @@ public class MainWindow extends JFrame implements Runnable {
   private JMenuBar createMenuBar(){
     JMenuBar menuBar = new JMenuBar();
     JMenu fileMenu = new JMenu("File");
-    JMenuItem createItem = new JMenuItem("Create");
+    JMenuItem createItem = new JMenuItem(new AbstractAction("Create") {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        tableWindow = new TableWindow();
+        tableWindow.setVisible(true);
+      }
+    });
+
     fileMenu.add(createItem);
     menuBar.add(fileMenu);
 
