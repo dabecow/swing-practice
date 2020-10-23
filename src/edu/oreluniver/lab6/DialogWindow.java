@@ -18,8 +18,7 @@ public class DialogWindow extends JFrame implements Runnable {
     int w,h;
     w = screen.width;
     h = screen.height;
-//    setMinimumSize(new Dimension(100, 100));
-    setSize(100,100);
+    setSize(w/4,h/4);
     setLocation(w/4, h/4);
     setTitle("My Frame");
     Image img = kit.getImage("Icon.gif");
@@ -48,8 +47,9 @@ public class DialogWindow extends JFrame implements Runnable {
         if (sumRButton.isSelected()){
           mainWindow.showSumTable();
         } else if (multiplyRButton.isSelected()){
-          mainWindow.showMultiplyingTable();
+          mainWindow.showMultiplicationTable();
         }
+        mainWindow.repaint();
       }
     });
 

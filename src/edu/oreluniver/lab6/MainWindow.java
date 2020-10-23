@@ -3,11 +3,14 @@ package edu.oreluniver.lab6;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableModel;
 
 public class MainWindow extends JFrame implements Runnable {
 
   DialogWindow dialogWindow;
   MainWindow mainInstance;
+  JTable table;
 
   public MainWindow getMainInstance() {
     return mainInstance;
@@ -27,7 +30,7 @@ public class MainWindow extends JFrame implements Runnable {
     Image img = kit.getImage("Icon.gif");
     setIconImage(img);
     setJMenuBar(createMenuBar());
-
+    createTable();
     mainInstance = this;
   }
 
@@ -50,14 +53,67 @@ public class MainWindow extends JFrame implements Runnable {
     return menuBar;
   }
 
+  private void createTable(){
+    TableModel tableModel = new AbstractTableModel() {
+      Object rowData[][] = new Object[10][10];
+
+      @Override
+      public int getRowCount() {
+        return 10;
+      }
+
+      @Override
+      public int getColumnCount() {
+        return 10;
+      }
+
+      @Override
+      public Object getValueAt(int rowIndex, int columnIndex) {
+        return rowData[rowIndex][columnIndex];
+      }
+
+      @Override
+      public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        rowData[rowIndex][columnIndex] = aValue;
+      }
+    };
+
+    table = new JTable(tableModel);
+
+//    table.setGridColor(Color.black);
+
+    JScrollPane jScrollPane = new JScrollPane(table);
+    table.setVisible(true);
+    add(jScrollPane);
+    setVisible(true);
+  }
+
   public void showSumTable(){
-    System.out.println("it has to be a sum table");
+
+    for (int i = 0; i < table.getColumnCount(); i++) {
+      table.getModel().setValueAt(i, i, 0);
+      for (int j = 1; j < table.getRowCount(); j++) {
+        if (i == 0)
+          table.getModel().setValueAt(j, i, j);
+        else
+          table.getModel().setValueAt( i+j, i, j);
+      }
+    }
   }
 
-  public void showMultiplyingTable(){
-    System.out.println("it has to be a multiplying table");
-
+  public void showMultiplicationTable(){
+    for (int i = 0; i < table.getColumnCount(); i++) {
+      table.getModel().setValueAt(i, i, 0);
+      for (int j = 1; j < table.getRowCount(); j++) {
+        if (i == 0)
+          table.getModel().setValueAt(j, i, j);
+        else
+          table.getModel().setValueAt( i*j, i, j);
+      }
+    }
   }
+
+
 
   @Override
   public void run() {
